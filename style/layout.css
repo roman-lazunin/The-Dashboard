@@ -1,4 +1,4 @@
-/* Main layout grid system */
+/* Simple layout for dashboard */
 body, html {
   height: 100%;
   margin: 0;
@@ -6,7 +6,6 @@ body, html {
   box-sizing: border-box;
 }
 
-/* Remove old main-container and section styles to avoid conflicts with new grid system */
 section {
   background: none;
   border-radius: 0;

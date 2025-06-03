@@ -1,10 +1,9 @@
-/* Background image styling for dashboard */
 body.dashboard-bg {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  transition: background-image 0.5s ease-in-out;
+  transition: background-image 0.5s;
 }
 
 body.dashboard-bg::before {
@@ -15,6 +14,7 @@ body.dashboard-bg::before {
   z-index: 0;
   pointer-events: none;
 }
+
 body.dashboard-bg > * {
   position: relative;
   z-index: 1;

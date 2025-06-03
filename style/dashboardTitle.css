@@ -1,23 +1,33 @@
-/* dashboardTitle.css - Styles for the editable dashboard title */
+.dashboard-title-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 18px;
+}
+
 #dashboard-title {
-  font-size: 2em;
+  font-size: 2.3em;
   font-weight: bold;
   text-align: center;
-  margin: 0.5em auto 1em auto;
-  color: var(--primary-text, #222);
+  color: #222;
+  margin: 0 0 0.2em 0;
+  letter-spacing: 1px;
   transition: color 0.2s;
 }
+
 #dashboard-title:hover {
-  color: var(--accent, #0077ff);
+  color: #4a6bfa;
 }
+
 #dashboard-title-input {
   display: block;
-  font-size: 2em;
+  font-size: 2.3em;
   font-weight: bold;
   text-align: center;
-  margin: 0.5em auto 1em auto;
+  margin: 0 auto 0.2em auto;
   padding: 0.2em 0.5em;
-  border: 2px solid var(--accent, #0077ff);
-  border-radius: var(--border-radius-md, 8px);
+  border: 2px solid #4a6bfa;
+  border-radius: 8px;
   outline: none;
 }

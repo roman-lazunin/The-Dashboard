@@ -1,45 +1,59 @@
-/* Header and DateTime Styles */
+/* Simple, clean CSS for dashboard header and refresh button */
 header {
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 15px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  border-radius: 0 0 var(--border-radius-xl, 16px) var(--border-radius-xl, 16px);
+  margin: 0 auto 32px auto;
+  background: rgba(255,255,255,0.92);
+  border-radius: 32px;
+  padding: 18px 36px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  z-index: 2;
+  justify-content: center;
+  gap: 24px;
 }
 
 .datetime-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
 }
 
 .time {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 5px;
+  font-size: 2.2rem;
+  font-weight: 700;
 }
 
 .date {
-  font-size: 1.2rem;
-  color: #555;
+  font-size: 1.1rem;
 }
 
 #refresh-image-btn {
-  margin-top: 10px;
-  padding: 6px 16px;
-  border-radius: var(--border-radius-md, 8px);
-  border: 1px solid #bbb;
-  background: #fff;
+  margin-left: 18px;
+  padding: 8px 18px;
+  border-radius: 18px;
+  border: none;
+  background: #4a6bfa;
+  color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s;
 }
+
 #refresh-image-btn:hover {
-  background: #f0f0f0;
+  background: #3255e6;
+}
+
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 98vw;
+    padding: 12px 4vw;
+    gap: 12px;
+  }
+  .datetime-container { align-items: center; }
+  #refresh-image-btn {
+    margin-left: 0;
+    margin-top: 8px;
+    width: 100%;
+    border-radius: 14px;
+    padding: 10px 0;
+  }
 }

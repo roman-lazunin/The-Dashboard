@@ -1,4 +1,5 @@
-/* Import modular CSS files */
+/* Main dashboard style imports and simple grid */
+@import url('variables.css');
 @import url('header.css');
 @import url('weather.css');
 @import url('background.css');
@@ -6,10 +7,9 @@
 @import url('extraLinks.css');
 @import url('notesCard.css');
 
-/* You can add global resets and variables here */
 :root {
-  --main-radius: 12px;
-  --main-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  --main-radius: var(--border-radius-lg, 12px);
+  --main-shadow: var(--shadow-md, 0 2px 8px rgba(0,0,0,0.04));
 }
 
 body, html {
@@ -18,48 +18,30 @@ body, html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  height: 100vh;
+  min-height: 100vh;
 }
 
-/* Header and DateTime Styles */
-header {
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 15px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-.datetime-container {
+.dashboard-vertical-center {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.time {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-.date {
-  font-size: 1.2rem;
-  color: #555;
-}
-
-/* Modular Grid Layout for Dashboard */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: var(--dashboard-gap, 24px);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
   padding: 24px;
-  max-width: 1200px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
 .dashboard-section {
-  background: #fff;
-  border-radius: var(--border-radius-xl, 16px);
+  background: #e2e2e2;
+  border-radius: 16px;
   box-shadow: var(--main-shadow);
   padding: 20px;
   min-width: 0;
@@ -68,7 +50,10 @@ header {
   gap: 12px;
 }
 
-/* Responsive adjustments */
+@media (max-width: 1300px) {
+  .dashboard-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
 @media (max-width: 900px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
@@ -80,33 +65,7 @@ header {
 @media (max-width: 600px) {
   .dashboard-section {
     padding: 12px;
-    border-radius: var(--border-radius-md, 8px);
+    border-radius: 8px;
   }
+  .dashboard-vertical-center { padding: 12px 0; }
 }
-
-/* Background image styling for dashboard */
-body.dashboard-bg {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  transition: background-image 0.5s ease-in-out;
-}
-
-/* Optional: overlay for readability */
-body.dashboard-bg::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.25); /* subtle dark overlay */
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Ensure main content is above overlay */
-body.dashboard-bg > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Remove any .add-link-form styles from this file, as they should only be in extraLinks.css */

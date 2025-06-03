@@ -1,80 +1,58 @@
-// Import the getWeatherData function
+// Show weather for today and tomorrow
 import getWeatherData from './getWeatherData.js';
-
-// Function to display weather data
 function displayWeather() {
-  // Get the weather section by class, not by 'section' tag
-  const weatherSection = document.querySelector('.dashboard-card-weather');
-  if (!weatherSection) return;
-
-  // Create weather cards container
-  const weatherCards = document.createElement('div');
-  weatherCards.className = 'weather-cards';
-
-  getWeatherData()
-    .then(data => {
-      // Today
-      const todayData = data.today;
-      const todayIconCode = todayData.weather[0].icon;
-      const todayIconUrl = `https://openweathermap.org/img/wn/${todayIconCode}@2x.png`;
-      const todayTemp = `${Math.round(todayData.main.temp - 273.15)}°C`;
-      const todayDesc = todayData.weather[0].description;
-      const todayCard = `
-        <div class="weather-card">
-          <img src="${todayIconUrl}" alt="Weather icon">
-          <div class="weather-info">
-            <span class="weather-title">Idag</span>
-            <span class="weather-temp">${todayTemp}</span>
-            <span class="weather-desc">${capitalizeFirst(todayDesc)}</span>
-          </div>
+  const section = document.querySelector('.dashboard-card-weather');
+  if (!section) return;
+  const cards = document.createElement('div');
+  cards.className = 'weather-cards';
+  getWeatherData().then(data => {
+    const today = data.today;
+    const tIcon = today.weather[0].icon;
+    const tUrl = `https://openweathermap.org/img/wn/${tIcon}@2x.png`;
+    const tTemp = `${Math.round(today.main.temp - 273.15)}°C`;
+    const tDesc = today.weather[0].description;
+    const todayCard = `
+      <div class="weather-card">
+        <img src="${tUrl}" alt="Weather icon">
+        <div class="weather-info">
+          <span class="weather-title">Idag</span><br>
+          <span class="weather-temp">${tTemp}</span><br>
+          <span class="weather-desc">${cap(tDesc)}</span>
         </div>
-      `;
-
-      // Tomorrow
-      const tomorrowData = data.tomorrow;
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      tomorrow.setHours(12, 0, 0, 0);
-      let tomorrowForecast = tomorrowData.list[0];
-      let smallestDiff = Infinity;
-      for (const forecast of tomorrowData.list) {
-        const forecastTime = new Date(forecast.dt * 1000);
-        const timeDiff = Math.abs(forecastTime - tomorrow);
-        if (timeDiff < smallestDiff) {
-          smallestDiff = timeDiff;
-          tomorrowForecast = forecast;
-        }
-      }
-      const tomorrowIconCode = tomorrowForecast.weather[0].icon;
-      const tomorrowIconUrl = `https://openweathermap.org/img/wn/${tomorrowIconCode}@2x.png`;
-      const tomorrowTemp = `${Math.round(tomorrowForecast.main.temp - 273.15)}°C`;
-      const tomorrowDesc = tomorrowForecast.weather[0].description;
-      const tomorrowCard = `
-        <div class="weather-card">
-          <img src="${tomorrowIconUrl}" alt="Weather icon">
-          <div class="weather-info">
-            <span class="weather-title">Imorgon</span>
-            <span class="weather-temp">${tomorrowTemp}</span>
-            <span class="weather-desc">${capitalizeFirst(tomorrowDesc)}</span>
-          </div>
+      </div>
+    `;
+    const tomorrow = data.tomorrow;
+    const target = new Date();
+    target.setDate(target.getDate() + 1);
+    target.setHours(12, 0, 0, 0);
+    let closest = tomorrow.list[0], minDiff = Infinity;
+    for (const f of tomorrow.list) {
+      const ft = new Date(f.dt * 1000);
+      const diff = Math.abs(ft - target);
+      if (diff < minDiff) { minDiff = diff; closest = f; }
+    }
+    const tmIcon = closest.weather[0].icon;
+    const tmUrl = `https://openweathermap.org/img/wn/${tmIcon}@2x.png`;
+    const tmTemp = `${Math.round(closest.main.temp - 273.15)}°C`;
+    const tmDesc = closest.weather[0].description;
+    const tomorrowCard = `
+      <div class="weather-card">
+        <img src="${tmUrl}" alt="Weather icon">
+        <div class="weather-info">
+          <span class="weather-title">Imorgon</span><br>
+          <span class="weather-temp">${tmTemp}</span><br>
+          <span class="weather-desc">${cap(tmDesc)}</span>
         </div>
-      `;
-
-      // Add both cards
-      weatherCards.innerHTML = todayCard + tomorrowCard;
-      weatherSection.innerHTML = '';
-      weatherSection.appendChild(weatherCards);
-    })
-    .catch(error => {
-      weatherCards.innerHTML = '<p>Failed to load weather data</p>';
-      weatherSection.innerHTML = '';
-      weatherSection.appendChild(weatherCards);
-    });
+      </div>
+    `;
+    cards.innerHTML = todayCard + tomorrowCard;
+    section.innerHTML = '';
+    section.appendChild(cards);
+  }).catch(() => {
+    cards.innerHTML = '<p>Failed to load weather data</p>';
+    section.innerHTML = '';
+    section.appendChild(cards);
+  });
 }
-
-function capitalizeFirst(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-// Call the display function when the DOM is loaded
+function cap(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
 document.addEventListener('DOMContentLoaded', displayWeather);

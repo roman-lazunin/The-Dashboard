@@ -1,35 +1,25 @@
-// scripts/newsFeed.js
-// Fetches and displays the latest tech news using NewsAPI
-
-const NEWS_API_KEY = '1fafae0a869447e1823fbb0b2ff2307a'; // Replace with your NewsAPI key
+// Show latest tech news (NewsAPI)
+const NEWS_API_KEY = '1fafae0a869447e1823fbb0b2ff2307a';
 const NEWS_API_URL = `https://newsapi.org/v2/top-headlines?category=technology&language=en&pageSize=3&apiKey=${NEWS_API_KEY}`;
-
 export async function renderNewsFeedCard(section) {
   section.innerHTML = '';
-
   const list = document.createElement('ul');
   list.className = 'news-feed-list';
   section.appendChild(list);
-
   const loading = document.createElement('div');
   loading.textContent = 'Loading...';
   loading.className = 'news-feed-loading';
   section.appendChild(loading);
-
   try {
     const res = await fetch(NEWS_API_URL);
     const data = await res.json();
     loading.remove();
     if (data.articles && data.articles.length > 0) {
       data.articles.forEach(article => {
-        // Create a card for each news item
         const card = document.createElement('li');
         card.className = 'news-feed-item news-feed-card';
         card.style.cursor = 'pointer';
-        card.onclick = (e) => {
-          window.open(article.url, '_blank');
-        };
-        // Card layout: image left, content right
+        card.onclick = () => { window.open(article.url, '_blank'); };
         const imgDiv = document.createElement('div');
         imgDiv.className = 'news-feed-img-wrapper';
         if (article.urlToImage) {
@@ -43,7 +33,6 @@ export async function renderNewsFeedCard(section) {
         card.appendChild(imgDiv);
         const contentDiv = document.createElement('div');
         contentDiv.className = 'news-feed-content';
-        // Title as plain text (not a link)
         const titleSpan = document.createElement('span');
         titleSpan.textContent = article.title;
         titleSpan.className = 'news-feed-title-text';
@@ -62,17 +51,13 @@ export async function renderNewsFeedCard(section) {
       li.textContent = 'No news found.';
       list.appendChild(li);
     }
-  } catch (err) {
+  } catch {
     loading.remove();
     const li = document.createElement('li');
     li.textContent = 'Failed to load news.';
     list.appendChild(li);
   }
-
-  section.appendChild(container);
 }
-
-// Auto-init if loaded as module
 if (typeof window !== 'undefined') {
   window.renderNewsFeedCard = renderNewsFeedCard;
 }

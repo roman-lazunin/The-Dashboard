@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="style/newsFeed.css">
 </head>
 <body>
-
-  <!--  <p style="background-image: url('img_girl.jpg');"></p>-->
-
+  <div class="dashboard-vertical-center">
     <nav></nav>
-
+    <div class="dashboard-title-bar">
+      <h1 id="dashboard-title"></h1>
+    </div>
     <header>
         <div class="datetime-container">
             <div id="current-time" class="time"></div>
@@ -21,50 +21,45 @@
         </div>
         <button id="refresh-image-btn">Refresh Image</button>
     </header>
-    <main class="dashboard-grid">
-        <!-- Dynamically generated cards -->
-    </main>
-
-    <script type="module" src="scripts/getCurrentLocation.js"></script>
-    <script type="module" src="API Keys/API_keys.js"></script>
-    <script src="scripts/displayDateTime.js"></script>
-    <script type="module" src="scripts/getWeatherData.js"></script>
-    <script type="module" src="scripts/displayWeatherData.js"></script>
-    <script type="module" src="scripts/setBackgroundImage.js"></script>
-    <script type="module" src="scripts/dashboardTitle.js"></script>
-    <script type="module" src="scripts/customLinks.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const cardConfigs = [
-          { key: 'weather', title: 'Väder', render: () => import('./scripts/displayWeatherData.js') },
-          { key: 'links', title: 'Länkar', render: () => window.renderLinksCard },
-          { key: 'news', title: 'Tech News', render: () => import('./scripts/newsFeed.js') },
-          { key: 'extra', title: 'Extra', render: null }, // Placeholder for future
-        ];
-        const main = document.querySelector('main.dashboard-grid');
-        main.innerHTML = '';
-        cardConfigs.forEach((cfg, i) => {
-          const section = document.createElement('div');
-          section.className = `dashboard-section dashboard-card dashboard-card-${cfg.key}`;
-          main.appendChild(section);
-          // Render content if render function exists
-          if (cfg.key === 'weather') {
-            // Weather handled by displayWeatherData.js (assumes it targets this section)
-            // Optionally, you can move weather rendering here if you want full control
-          } else if (cfg.key === 'links' && window.renderLinksCard) {
-            window.renderLinksCard(section);
-          } else if (cfg.key === 'news') {
-            import('./scripts/newsFeed.js').then(mod => {
-              mod.renderNewsFeedCard(section);
-            });
-          } else if (cfg.key === 'extra') {
-            import('./scripts/notesCard.js').then(mod => {
-              mod.renderNotesCard(section);
-            });
-          }
-          // 'extra' is left empty for now
-        });
+    <main class="dashboard-grid"></main>
+  </div>
+  <script type="module" src="scripts/getCurrentLocation.js"></script>
+  <script type="module" src="API Keys/API_keys.js"></script>
+  <script src="scripts/displayDateTime.js"></script>
+  <script type="module" src="scripts/getWeatherData.js"></script>
+  <script type="module" src="scripts/displayWeatherData.js"></script>
+  <script type="module" src="scripts/setBackgroundImage.js"></script>
+  <script type="module" src="scripts/dashboardTitle.js"></script>
+  <script type="module" src="scripts/customLinks.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const cardConfigs = [
+        { key: 'weather', render: () => import('./scripts/displayWeatherData.js') },
+        { key: 'links', render: () => window.renderLinksCard },
+        { key: 'news', render: () => import('./scripts/newsFeed.js') },
+        { key: 'extra', render: null },
+      ];
+      const main = document.querySelector('main.dashboard-grid');
+      main.innerHTML = '';
+      cardConfigs.forEach(cfg => {
+        const section = document.createElement('div');
+        section.className = `dashboard-section dashboard-card dashboard-card-${cfg.key}`;
+        main.appendChild(section);
+        if (cfg.key === 'weather') {
+          // Weather handled by displayWeatherData.js
+        } else if (cfg.key === 'links' && window.renderLinksCard) {
+          window.renderLinksCard(section);
+        } else if (cfg.key === 'news') {
+          import('./scripts/newsFeed.js').then(mod => {
+            mod.renderNewsFeedCard(section);
+          });
+        } else if (cfg.key === 'extra') {
+          import('./scripts/notesCard.js').then(mod => {
+            mod.renderNotesCard(section);
+          });
+        }
       });
-    </script>
+    });
+  </script>
 </body>
 </html>

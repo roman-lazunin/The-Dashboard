@@ -1,30 +1,32 @@
-// scripts/setBackgroundImage.js
-// Sets the background image of the whole page using Unsplash
+// Set the background image using Unsplash
 import getUnsplashImageUrl from './getUnsplashImage.js';
 
-// On load, use the saved image if available
-const savedImage = localStorage.getItem('dashboardBgImage');
-if (savedImage) {
+// Use saved image if there is one
+const saved = localStorage.getItem('dashboardBgImage');
+if (saved) {
   document.body.classList.add('dashboard-bg');
-  document.body.style.backgroundImage = `url('${savedImage}')`;
+  document.body.style.backgroundImage = `url('${saved}')`;
 } else {
   document.body.classList.remove('dashboard-bg');
 }
 
 async function setBackgroundImage() {
-  // Only fetch a new image if the button is pressed (not on load)
-  const imageUrl = await getUnsplashImageUrl();
-  if (imageUrl) {
+  const url = await getUnsplashImageUrl();
+  if (!url) return;
+  const img = new window.Image();
+  img.src = url;
+  img.onload = function() {
     document.body.classList.add('dashboard-bg');
-    document.body.style.backgroundImage = `url('${imageUrl}')`;
-    localStorage.setItem('dashboardBgImage', imageUrl);
-  }
+    document.body.style.backgroundImage = `url('${url}')`;
+    localStorage.setItem('dashboardBgImage', url);
+    if (typeof window.setInvertedTitleColor === 'function') {
+      setTimeout(() => window.setInvertedTitleColor(), 100);
+    }
+  };
 }
 
 // Add event listener for refresh button
-const refreshBtn = document.getElementById('refresh-image-btn');
-if (refreshBtn) {
-  refreshBtn.addEventListener('click', setBackgroundImage);
-}
+const btn = document.getElementById('refresh-image-btn');
+if (btn) btn.addEventListener('click', setBackgroundImage);
 
 export default setBackgroundImage;
