@@ -1,0 +1,23 @@
+/* dashboardTitle.css - Styles for the editable dashboard title */
+#dashboard-title {
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.5em auto 1em auto;
+  color: var(--primary-text, #222);
+  transition: color 0.2s;
+}
+#dashboard-title:hover {
+  color: var(--accent, #0077ff);
+}
+#dashboard-title-input {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.5em auto 1em auto;
+  padding: 0.2em 0.5em;
+  border: 2px solid var(--accent, #0077ff);
+  border-radius: 6px;
+  outline: none;
+}

@@ -1,0 +1,99 @@
+.custom-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+  width: 100%;
+}
+.custom-links-list li {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 10px 14px 10px 10px;
+  margin: 0;
+  gap: 10px;
+  position: relative;
+  min-height: 38px;
+  transition: background 0.15s;
+}
+.custom-links-list li:hover {
+  background: #e9ecef;
+}
+.custom-links-list .link-favicon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  margin-right: 8px;
+  background: #e9ecef;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.custom-links-list .custom-link-text {
+  color: #222;
+  font-size: 1em;
+  text-decoration: none;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.delete-link-btn {
+  background: none;
+  color: #b52a37;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 1.3em;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+.delete-link-btn:hover {
+  background: #f3d6d9;
+  color: #dc3545;
+}
+.add-link-form {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  width: 100%;
+}
+.add-link-form input[type="text"],
+.add-link-form input[type="url"] {
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 1em;
+  flex: 1 1 0;
+}
+.add-link-form button[type="submit"] {
+  background: #4a6bfa;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 12px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background 0.15s;
+}
+.add-link-form button[type="submit"]:hover {
+  background: #3255e6;
+}
+
+@media (max-width: 600px) {
+  .custom-links-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 8px;
+  }
+}
