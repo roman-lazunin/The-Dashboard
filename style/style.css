@@ -4,6 +4,7 @@
 @import url('background.css');
 @import url('layout.css');
 @import url('extraLinks.css');
+@import url('notesCard.css');
 
 /* You can add global resets and variables here */
 :root {
@@ -46,12 +47,41 @@ header {
   color: #555;
 }
 
-/* General section styling */
-section {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 15px;
-  margin: 15px;
+/* Modular Grid Layout for Dashboard */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--dashboard-gap, 24px);
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-section {
+  background: #fff;
+  border-radius: var(--border-radius-xl, 16px);
+  box-shadow: var(--main-shadow);
+  padding: 20px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-section {
+    padding: 12px;
+    border-radius: var(--border-radius-md, 8px);
+  }
 }
 
 /* Background image styling for dashboard */
@@ -78,3 +108,5 @@ body.dashboard-bg > * {
   position: relative;
   z-index: 1;
 }
+
+/* Remove any .add-link-form styles from this file, as they should only be in extraLinks.css */

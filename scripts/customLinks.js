@@ -66,26 +66,55 @@ export function renderLinksCard(section) {
   });
   container.appendChild(list);
 
-  // Add form
-  const form = document.createElement('form');
-  form.className = 'add-link-form';
-  form.innerHTML = `
-    <input type="text" name="name" placeholder="Namn" required style="margin-right:6px;">
-    <input type="url" name="url" placeholder="https://..." required style="margin-right:6px;">
-    <button type="submit">Lägg till</button>
-  `;
-  form.onsubmit = e => {
-    e.preventDefault();
-    const name = form.name.value.trim();
-    const url = form.url.value.trim();
-    if (name && url) {
-      links.push({ name, url });
-      saveLinks(links);
-      renderLinksCard(section);
-      form.reset();
-    }
+  // Add-link floating button (inside the card, not absolutely positioned)
+  const addBtn = document.createElement('button');
+  addBtn.className = 'add-link-fab-inside';
+  addBtn.type = 'button';
+  addBtn.title = 'Lägg till länk';
+  addBtn.innerHTML = '+';
+  addBtn.onclick = () => {
+    showAddLinkModal();
   };
-  container.appendChild(form);
+  // Place the button at the end of the container, after the list
+  container.appendChild(addBtn);
+
+  // Modal for add-link form
+  function showAddLinkModal() {
+    // Prevent multiple modals in the same card
+    if (container.querySelector('.add-link-modal')) return;
+    const modal = document.createElement('div');
+    modal.className = 'add-link-modal';
+    modal.innerHTML = `
+      <div class="add-link-modal-content">
+        <form class="add-link-form-modal">
+          <input type="text" name="name" placeholder="Namn" required autocomplete="off">
+          <input type="url" name="url" placeholder="https://..." required autocomplete="off">
+          <button type="submit" aria-label="Lägg till" title="Lägg till" class="add-link-btn">+</button>
+          <button type="button" class="add-link-cancel">Avbryt</button>
+        </form>
+      </div>
+    `;
+    // Insert modal inside the card container
+    container.appendChild(modal);
+    // Focus first input
+    modal.querySelector('input[name="name"]').focus();
+    // Cancel button
+    modal.querySelector('.add-link-cancel').onclick = () => modal.remove();
+    // Submit
+    modal.querySelector('form').onsubmit = e => {
+      e.preventDefault();
+      const name = modal.querySelector('input[name="name"]').value.trim();
+      const url = modal.querySelector('input[name="url"]').value.trim();
+      if (name && url) {
+        links.push({ name, url });
+        saveLinks(links);
+        renderLinksCard(section);
+        modal.remove();
+      }
+    };
+    // Close on outside click (only if click is on modal background)
+    modal.onclick = e => { if (e.target === modal) modal.remove(); };
+  }
 
   section.appendChild(container);
 }

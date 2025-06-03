@@ -6,34 +6,18 @@ body, html {
   box-sizing: border-box;
 }
 
-.main-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 24px;
-  padding: 24px;
-  max-width: 1600px;
-  margin: 0 auto;
-  width: 100%;
-}
-
+/* Remove old main-container and section styles to avoid conflicts with new grid system */
 section {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 15px;
-  min-height: 120px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  min-height: unset;
+  box-shadow: none;
 }
 
 @media (max-width: 900px) {
-  .main-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
-    padding: 10px;
-    gap: 14px;
-  }
   section {
-    min-height: 80px;
-    padding: 10px;
+    min-height: unset;
+    padding: 0;
   }
 }

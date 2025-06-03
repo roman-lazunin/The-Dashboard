@@ -6,6 +6,7 @@
     <title>The Dashboard</title>
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/dashboardTitle.css">
+    <link rel="stylesheet" href="style/newsFeed.css">
 </head>
 <body>
 
@@ -20,29 +21,49 @@
         </div>
         <button id="refresh-image-btn">Refresh Image</button>
     </header>
-    <main class="main-container">
-        <section></section>
-        <section></section>
-        <section></section>
-        <section></section>
+    <main class="dashboard-grid">
+        <!-- Dynamically generated cards -->
     </main>
 
     <script type="module" src="scripts/getCurrentLocation.js"></script>
     <script type="module" src="API Keys/API_keys.js"></script>
     <script src="scripts/displayDateTime.js"></script>
-    
     <script type="module" src="scripts/getWeatherData.js"></script>
     <script type="module" src="scripts/displayWeatherData.js"></script>
     <script type="module" src="scripts/setBackgroundImage.js"></script>
     <script type="module" src="scripts/dashboardTitle.js"></script>
     <script type="module" src="scripts/customLinks.js"></script>
     <script>
-      // Render custom links in the third card (section)
       document.addEventListener('DOMContentLoaded', function() {
-        const sections = document.querySelectorAll('main.main-container > section');
-        if (sections[2] && window.renderLinksCard) {
-          window.renderLinksCard(sections[2]);
-        }
+        const cardConfigs = [
+          { key: 'weather', title: 'Väder', render: () => import('./scripts/displayWeatherData.js') },
+          { key: 'links', title: 'Länkar', render: () => window.renderLinksCard },
+          { key: 'news', title: 'Tech News', render: () => import('./scripts/newsFeed.js') },
+          { key: 'extra', title: 'Extra', render: null }, // Placeholder for future
+        ];
+        const main = document.querySelector('main.dashboard-grid');
+        main.innerHTML = '';
+        cardConfigs.forEach((cfg, i) => {
+          const section = document.createElement('div');
+          section.className = `dashboard-section dashboard-card dashboard-card-${cfg.key}`;
+          main.appendChild(section);
+          // Render content if render function exists
+          if (cfg.key === 'weather') {
+            // Weather handled by displayWeatherData.js (assumes it targets this section)
+            // Optionally, you can move weather rendering here if you want full control
+          } else if (cfg.key === 'links' && window.renderLinksCard) {
+            window.renderLinksCard(section);
+          } else if (cfg.key === 'news') {
+            import('./scripts/newsFeed.js').then(mod => {
+              mod.renderNewsFeedCard(section);
+            });
+          } else if (cfg.key === 'extra') {
+            import('./scripts/notesCard.js').then(mod => {
+              mod.renderNotesCard(section);
+            });
+          }
+          // 'extra' is left empty for now
+        });
       });
     </script>
 </body>

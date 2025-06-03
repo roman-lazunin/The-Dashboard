@@ -1,0 +1,147 @@
+/* style/notesCard.css - Styles for the modular notes card */
+.notes-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+.notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.note-item {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  border-radius: var(--border-radius-lg, 12px);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 8px 12px;
+  gap: 8px;
+  min-height: 38px;
+  transition: background 0.15s;
+}
+.note-item:hover {
+  background: #e9ecef;
+}
+.note-text {
+  flex: 1;
+  font-size: 1em;
+  color: #222;
+  cursor: pointer;
+  outline: none;
+  word-break: break-word;
+}
+.delete-note-btn {
+  background: none;
+  color: #b52a37;
+  border: none;
+  border-radius: var(--border-radius-round, 50%);
+  width: 28px;
+  height: 28px;
+  font-size: 1.3em;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+.delete-note-btn:hover {
+  background: #f3d6d9;
+  color: #dc3545;
+}
+.add-note-form {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  align-items: center;
+}
+.add-note-input, .edit-note-input {
+  border: 1px solid #bbb;
+  border-radius: var(--border-radius-md, 8px);
+  padding: 6px 10px;
+  font-size: 1em;
+  flex: 1 1 0;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.add-note-input {
+  width: 100%;
+  min-height: 32px;
+  font-size: 1em;
+  border: 1px solid #bbb;
+  border-radius: var(--border-radius-md, 8px);
+  padding: 6px 10px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  resize: none;
+  line-height: 1.4;
+  margin: 0;
+  transition: border 0.15s;
+  overflow-y: hidden;
+}
+.add-note-input:focus {
+  border: 1.5px solid #4a6bfa;
+  outline: none;
+}
+.add-note-btn {
+  background: #4a6bfa;
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius-round, 50%);
+  width: 32px;
+  height: 32px;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin-left: 2px;
+  cursor: pointer;
+  transition: background 0.15s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+}
+.add-note-btn:hover {
+  background: #3255e6;
+}
+.edit-note-input {
+  width: 100%;
+  min-height: 32px;
+  font-size: 1em;
+  border: 1px solid #bbb;
+  border-radius: var(--border-radius-md, 8px);
+  padding: 6px 10px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  resize: none;
+  line-height: 1.4;
+  margin: 0;
+  transition: border 0.15s;
+}
+.edit-note-input:focus {
+  border: 1.5px solid #4a6bfa;
+  outline: none;
+}
+@media (max-width: 600px) {
+  .notes-card-container {
+    gap: 8px;
+  }
+  .note-item {
+    padding: 8px 6px;
+    border-radius: var(--border-radius-md, 8px);
+  }
+  .add-note-form {
+    gap: 4px;
+  }
+  .add-note-btn {
+    width: 100%;
+    border-radius: var(--border-radius-md, 8px);
+    font-size: 1.2em;
+    margin-left: 0;
+  }
+}

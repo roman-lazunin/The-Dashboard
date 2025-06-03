@@ -18,6 +18,6 @@
   margin: 0.5em auto 1em auto;
   padding: 0.2em 0.5em;
   border: 2px solid var(--accent, #0077ff);
-  border-radius: 6px;
+  border-radius: var(--border-radius-md, 8px);
   outline: none;
 }

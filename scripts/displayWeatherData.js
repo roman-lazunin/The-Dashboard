@@ -3,9 +3,10 @@ import getWeatherData from './getWeatherData.js';
 
 // Function to display weather data
 function displayWeather() {
-  // Get the first section element to display weather info
-  const weatherSection = document.querySelector('section');
-  
+  // Get the weather section by class, not by 'section' tag
+  const weatherSection = document.querySelector('.dashboard-card-weather');
+  if (!weatherSection) return;
+
   // Create weather cards container
   const weatherCards = document.createElement('div');
   weatherCards.className = 'weather-cards';

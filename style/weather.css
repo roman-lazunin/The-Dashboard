@@ -11,7 +11,7 @@
 
 .weather-card {
   background: #f5f5f5;
-  border-radius: 12px;
+  border-radius: var(--border-radius-lg, 12px);
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
   padding: 18px 20px 14px 20px;
   margin-bottom: 18px;
@@ -52,7 +52,7 @@
 /* For the main weather container */
 .weather-container {
   background: #e9ecef;
-  border-radius: 14px;
+  border-radius: var(--border-radius-xl, 16px);
   padding: 12px 8px;
   max-width: 380px;
   margin: 0 auto;
@@ -69,6 +69,7 @@
     align-items: flex-start;
     gap: 8px;
     padding: 10px 8px;
+    border-radius: var(--border-radius-lg, 12px);
   }
   .weather-card img {
     margin-right: 0;
